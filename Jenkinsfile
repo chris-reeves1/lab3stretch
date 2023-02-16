@@ -4,8 +4,7 @@ pipeline {
     stages {
          stage('Init') {
             steps {
-                sh 'docker stop myapp || true'
-                sh 'docker rm myapp || true'
+                sh 'docker rm -f $(docker ps -qa)'
             }
         }
         stage('Build') {
@@ -16,7 +15,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 5500:5500 myapp:latest'
+                sh 'docker run -d -p 5500:5500 --name myapp myapp:latest'
             }
         }
     }

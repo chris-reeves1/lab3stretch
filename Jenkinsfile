@@ -2,6 +2,12 @@ pipeline {
     agent any
 
     stages {
+         stage('Init') {
+            steps {
+                sh 'docker stop myapp || true'
+                sh 'docker rm myapp || true'
+            }
+        }
         stage('Build') {
             steps {
                 sh 'docker build -t myapp .'
